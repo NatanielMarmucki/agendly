@@ -106,6 +106,8 @@ class SessionsRelationManager extends EventRelationManager
                     ->collapsible(),
             )
             ->groupingSettingsHidden()
+            ->paginated([25, 50, 100, 'all'])
+            ->defaultPaginationPageOption(50)
             ->columns([
                 TextColumn::make('starts_at')
                     ->label(__('admin.session.time'))
