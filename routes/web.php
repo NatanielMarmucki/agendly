@@ -5,10 +5,9 @@ declare(strict_types=1);
 use App\Http\Controllers\Admin\EventQrCodeController;
 use Illuminate\Support\Facades\Route;
 
-Route::inertia('/', 'Welcome')->name('home');
-
 /*
 | Organizer-only helpers that live next to the Filament panel.
+| The attendee app is registered separately in routes/public.php.
 */
 Route::middleware(['auth', 'can:view,event'])
     ->prefix('admin/events/{event}')
