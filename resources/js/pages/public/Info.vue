@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { Clock, MapPin, ShieldCheck, Users } from '@lucide/vue';
+import { CalendarPlus, Clock, MapPin, ShieldCheck, Users } from '@lucide/vue';
 import { computed } from 'vue';
 import PageHeader from '@/components/public/PageHeader.vue';
 import { useEventTime } from '@/composables/useEventTime';
@@ -86,6 +86,20 @@ const mapUrl = computed(() =>
             <Users class="size-5 text-muted-foreground" />
             {{ t('public.nav.groups') }}
         </Link>
+        <a
+            :href="publicRoutes.calendar(event.slug).url"
+            class="flex items-start gap-3 rounded-2xl border border-border bg-card p-4"
+        >
+            <CalendarPlus class="size-5 text-muted-foreground" />
+            <span>
+                <span class="block font-medium">{{
+                    t('public.info.calendar')
+                }}</span>
+                <span class="block text-sm text-muted-foreground">
+                    {{ t('public.info.calendar_hint') }}
+                </span>
+            </span>
+        </a>
     </div>
 
     <section v-if="rooms.length > 0" class="mb-6">

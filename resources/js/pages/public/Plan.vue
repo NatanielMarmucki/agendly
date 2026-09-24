@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { ShieldCheck } from '@lucide/vue';
+import { CalendarPlus, ShieldCheck } from '@lucide/vue';
 import { computed } from 'vue';
 import EmptyState from '@/components/public/EmptyState.vue';
 import PageHeader from '@/components/public/PageHeader.vue';
@@ -56,6 +56,13 @@ const conflicts = computed(() => {
     return ids;
 });
 
+const exportUrl = computed(
+    () =>
+        publicRoutes.calendar(event.value.slug, {
+            query: { sessions: planned.value.map((s) => s.id).join(',') },
+        }).url,
+);
+
 function clearPlan(): void {
     if (window.confirm(t('public.plan.clear_confirm'))) {
         plan.clear();
@@ -98,6 +105,13 @@ function clearPlan(): void {
         </section>
 
         <div class="flex flex-wrap gap-2">
+            <a
+                :href="exportUrl"
+                class="inline-flex h-10 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-primary-foreground"
+            >
+                <CalendarPlus class="size-4" />
+                {{ t('public.plan.export') }}
+            </a>
             <button
                 type="button"
                 class="h-10 rounded-xl border border-border px-4 text-sm"

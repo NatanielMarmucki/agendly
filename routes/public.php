@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Public\AnnouncementController;
+use App\Http\Controllers\Public\CalendarController;
 use App\Http\Controllers\Public\GroupController;
 use App\Http\Controllers\Public\InfoController;
 use App\Http\Controllers\Public\PlanController;
@@ -31,6 +32,8 @@ Route::prefix('e/{event:slug}')
     ->scopeBindings()
     ->group(function (): void {
         Route::get('/', ScheduleController::class)->name('schedule');
+        Route::get('calendar.ics', [CalendarController::class, 'event'])->name('calendar');
+        Route::get('sessions/{session}.ics', [CalendarController::class, 'session'])->whereNumber('session')->name('sessions.calendar');
         Route::get('sessions/{session}', SessionController::class)->whereNumber('session')->name('sessions.show');
         Route::get('plan', PlanController::class)->name('plan');
         Route::get('announcements', [AnnouncementController::class, 'index'])->name('announcements');

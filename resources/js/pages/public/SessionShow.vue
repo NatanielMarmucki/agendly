@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { Link, usePage } from '@inertiajs/vue3';
-import { ChevronLeft, Clock, ExternalLink, MapPin } from '@lucide/vue';
+import {
+    CalendarPlus,
+    ChevronLeft,
+    Clock,
+    ExternalLink,
+    MapPin,
+} from '@lucide/vue';
 import { computed } from 'vue';
 import PageHeader from '@/components/public/PageHeader.vue';
 import PlanToggle from '@/components/public/PlanToggle.vue';
@@ -78,6 +84,18 @@ const when = computed(
             :session-id="session.id"
             variant="button"
         />
+        <a
+            :href="
+                publicRoutes.sessions.calendar({
+                    event: event.slug,
+                    session: session.id,
+                }).url
+            "
+            class="inline-flex h-11 items-center justify-center gap-2 rounded-xl border border-border px-4 text-sm font-medium hover:bg-accent"
+        >
+            <CalendarPlus class="size-4" />
+            {{ t('public.session.add_to_calendar') }}
+        </a>
     </div>
 
     <p
