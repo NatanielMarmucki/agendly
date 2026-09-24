@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\User;
@@ -42,9 +44,4 @@ class UserFactory extends Factory
             'email_verified_at' => null,
         ]);
     }
-
-    /**
-     * Indicate that the model has two-factor authentication configured.
-     */
-    public function withTwoFactor(): static {}
 }

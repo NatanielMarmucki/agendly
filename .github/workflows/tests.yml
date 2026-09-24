@@ -34,5 +34,5 @@ jobs:
       - name: Setup Application
         run: composer setup
 
-      - name: Run CI Checks
+      - name: Run CI checks
         run: composer ci:check
