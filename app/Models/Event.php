@@ -174,9 +174,12 @@ class Event extends Model
         return $days;
     }
 
+    /**
+     * The address attendees reach by scanning the event QR code.
+     */
     public function publicUrl(): string
     {
-        return route('public.schedule', ['event' => $this->slug]);
+        return url('/e/'.$this->slug);
     }
 
     public function coverImageUrl(): ?string

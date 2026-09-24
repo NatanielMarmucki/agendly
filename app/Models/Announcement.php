@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Enums\AnnouncementPriority;
+use App\Events\AnnouncementPublished;
 use App\Models\Concerns\BelongsToEvent;
 use Carbon\CarbonImmutable;
 use Database\Factories\AnnouncementFactory;
@@ -37,6 +38,17 @@ class Announcement extends Model
     protected $attributes = [
         'priority' => 'normal',
     ];
+
+    protected static function booted(): void
+    {
+        static::saved(function (Announcement $announcement): void {
+            $becameVisible = $announcement->wasRecentlyCreated || $announcement->wasChanged('published_at');
+
+            if ($becameVisible && $announcement->isPublished()) {
+                AnnouncementPublished::dispatch($announcement);
+            }
+        });
+    }
 
     /**
      * @return array<string, string>

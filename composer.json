@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "agendly/agendly",
     "type": "project",
-    "description": "Agendly – a lightweight schedule PWA for small events.",
+    "description": "Agendly - a lightweight schedule PWA for small events.",
     "keywords": [
         "laravel",
         "events",
@@ -83,7 +83,8 @@
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

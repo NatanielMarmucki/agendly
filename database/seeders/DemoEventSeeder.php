@@ -166,6 +166,6 @@ class DemoEventSeeder extends Seeder
         ]);
 
         $this->command?->info('Demo organizer: '.self::ORGANIZER_EMAIL.' / password');
-        $this->command?->info('Public schedule: '.url('/e/'.$event->slug));
+        $this->command?->info('Public schedule: '.$event->publicUrl());
     }
 }
