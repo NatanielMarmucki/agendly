@@ -3,6 +3,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 import { computed, onMounted, onUnmounted, watch } from 'vue';
 import AnnouncementBanner from '@/components/public/AnnouncementBanner.vue';
 import BottomNav from '@/components/public/BottomNav.vue';
+import InstallHint from '@/components/public/InstallHint.vue';
 import LanguageSwitch from '@/components/public/LanguageSwitch.vue';
 import OfflineNotice from '@/components/public/OfflineNotice.vue';
 import {
@@ -11,6 +12,7 @@ import {
 } from '@/composables/useAnnouncements';
 import { createPollingSource } from '@/lib/announcementSource';
 import { rememberLastEvent } from '@/lib/lastEvent';
+import { warmUpEventCache } from '@/lib/offlineWarmup';
 import publicRoutes from '@/routes/public';
 import type { PublicPageProps } from '@/types';
 
@@ -36,6 +38,9 @@ onMounted(() => {
         slug,
         createPollingSource(publicRoutes.announcements.feed(slug).url),
     );
+
+    // Make the whole event available offline after this first visit.
+    window.setTimeout(() => void warmUpEventCache(slug, page.version), 3_000);
 });
 
 onUnmounted(() => stopUpdates?.());
@@ -68,6 +73,7 @@ onUnmounted(() => stopUpdates?.());
             <slot />
         </main>
 
+        <InstallHint />
         <BottomNav :event-slug="event.slug" />
     </div>
 </template>

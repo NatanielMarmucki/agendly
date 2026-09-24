@@ -1,4 +1,5 @@
 import { createInertiaApp } from '@inertiajs/vue3';
+import { registerServiceWorker } from '@/lib/pwa';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Agendly';
 
@@ -8,3 +9,5 @@ void createInertiaApp({
         color: '#4f46e5',
     },
 });
+
+registerServiceWorker();

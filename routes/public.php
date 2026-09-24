@@ -8,6 +8,7 @@ use App\Http\Controllers\Public\GroupController;
 use App\Http\Controllers\Public\InfoController;
 use App\Http\Controllers\Public\PlanController;
 use App\Http\Controllers\Public\ScheduleController;
+use App\Http\Controllers\Public\ServiceWorkerController;
 use App\Http\Controllers\Public\SessionController;
 use App\Http\Controllers\Public\SpeakerController;
 use App\Http\Middleware\EnsureEventIsPublished;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::inertia('/', 'Welcome')->name('home');
+
+Route::get('sw.js', ServiceWorkerController::class)->name('service-worker');
 
 Route::prefix('e/{event:slug}')
     ->name('public.')
