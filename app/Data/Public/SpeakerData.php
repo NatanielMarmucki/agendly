@@ -32,12 +32,11 @@ final readonly class SpeakerData extends Data
             name: $speaker->name,
             bio: $speaker->bio,
             photoUrl: $speaker->photoUrl(),
-            links: array_values($speaker->links ?? []),
-            sessions: $speaker->sessions
+            links: $speaker->links ?? [],
+            sessions: array_values($speaker->sessions
                 ->sortBy('starts_at')
                 ->map(fn (Session $session): array => ['id' => $session->id, 'title' => $session->title])
-                ->values()
-                ->all(),
+                ->all()),
         );
     }
 

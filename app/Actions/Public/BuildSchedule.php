@@ -15,20 +15,18 @@ final class BuildSchedule
 {
     public function handle(Event $event): ScheduleData
     {
-        $sessions = $event->sessions()
+        $sessions = array_values($event->sessions()
             ->with(['room', 'speakers'])
             ->chronological()
             ->get()
             ->map(fn (Session $session): SessionData => SessionData::fromModel($session, $event))
-            ->values()
-            ->all();
+            ->all());
 
-        $rooms = $event->rooms()
+        $rooms = array_values($event->rooms()
             ->orderBy('name')
             ->get()
             ->map(fn (Room $room): RoomData => RoomData::fromModel($room))
-            ->values()
-            ->all();
+            ->all());
 
         return new ScheduleData($sessions, $rooms);
     }

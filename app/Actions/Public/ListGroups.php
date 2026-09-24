@@ -15,11 +15,10 @@ final class ListGroups
      */
     public function handle(Event $event): array
     {
-        return $event->groups()
+        return array_values($event->groups()
             ->orderBy('name')
             ->get()
             ->map(fn (Group $group): GroupData => GroupData::fromModel($group))
-            ->values()
-            ->all();
+            ->all());
     }
 }

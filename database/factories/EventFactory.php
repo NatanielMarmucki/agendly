@@ -20,7 +20,7 @@ class EventFactory extends Factory
      */
     public function definition(): array
     {
-        $name = fake()->unique()->words(3, true);
+        $name = rtrim(fake()->unique()->sentence(3), '.');
         $startsAt = CarbonImmutable::instance(fake()->dateTimeBetween('+1 week', '+3 months'))
             ->setTimezone(Event::DEFAULT_TIMEZONE)
             ->setTime(9, 0);

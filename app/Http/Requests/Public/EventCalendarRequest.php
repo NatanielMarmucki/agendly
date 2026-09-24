@@ -62,6 +62,6 @@ class EventCalendarRequest extends FormRequest
         /** @var list<int|string> $ids */
         $ids = $this->validated('sessions', []);
 
-        return array_values(array_map(intval(...), $ids));
+        return array_map(intval(...), $ids);
     }
 }

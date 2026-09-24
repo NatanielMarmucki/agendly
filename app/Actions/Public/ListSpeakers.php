@@ -15,12 +15,11 @@ final class ListSpeakers
      */
     public function handle(Event $event): array
     {
-        return $event->speakers()
+        return array_values($event->speakers()
             ->with('sessions')
             ->orderBy('name')
             ->get()
             ->map(fn (Speaker $speaker): SpeakerData => SpeakerData::fromModel($speaker))
-            ->values()
-            ->all();
+            ->all());
     }
 }

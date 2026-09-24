@@ -102,7 +102,7 @@ class SessionsRelationManager extends EventRelationManager
                     ->label(__('admin.session.day'))
                     ->getKeyFromRecordUsing(fn (Session $record): string => $record->starts_at->setTimezone($timezone)->toDateString())
                     ->getTitleFromRecordUsing(fn (Session $record): string => $record->starts_at->setTimezone($timezone)->translatedFormat('l, j F'))
-                    ->orderQueryUsing(fn (Builder $query, string $direction) => $query->orderBy('starts_at', $direction))
+                    ->orderQueryUsing(fn (Builder $query, string $direction) => $query->orderBy('starts_at', $direction === 'desc' ? 'desc' : 'asc'))
                     ->collapsible(),
             )
             ->groupingSettingsHidden()

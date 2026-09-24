@@ -21,10 +21,9 @@ final class ShowSession
 
         return [
             'session' => SessionData::fromModel($session, $event),
-            'speakers' => $session->speakers
+            'speakers' => array_values($session->speakers
                 ->map(fn (Speaker $speaker): SpeakerData => SpeakerData::fromModel($speaker))
-                ->values()
-                ->all(),
+                ->all()),
         ];
     }
 }

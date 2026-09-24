@@ -48,10 +48,9 @@ final readonly class SessionData extends Data
             endsAt: $event->toLocal($session->ends_at)->toIso8601String(),
             day: $startsAt->toDateString(),
             room: $session->room === null ? null : RoomData::fromModel($session->room),
-            speakers: $session->speakers
+            speakers: array_values($session->speakers
                 ->map(fn (Speaker $speaker): SpeakerSummaryData => SpeakerSummaryData::fromModel($speaker))
-                ->values()
-                ->all(),
+                ->all()),
         );
     }
 

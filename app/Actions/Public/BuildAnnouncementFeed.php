@@ -24,10 +24,9 @@ final class BuildAnnouncementFeed
         );
 
         return new AnnouncementFeedData(
-            announcements: $announcements
+            announcements: array_values($announcements
                 ->map(fn (Announcement $announcement): AnnouncementData => AnnouncementData::fromModel($announcement, $event))
-                ->values()
-                ->all(),
+                ->all()),
             banner: $banner === null ? null : AnnouncementData::fromModel($banner, $event),
         );
     }

@@ -51,7 +51,10 @@ class EventResource extends Resource
         /** @var User|null $user */
         $user = auth()->user();
 
-        return parent::getEloquentQuery()
+        /** @var Builder<Event> $query */
+        $query = parent::getEloquentQuery();
+
+        return $query
             ->when(
                 $user !== null,
                 fn (Builder $query) => $query->whereBelongsTo($user),

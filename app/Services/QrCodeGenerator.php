@@ -8,6 +8,7 @@ use BaconQrCode\Common\ErrorCorrectionLevel;
 use BaconQrCode\Encoder\Encoder;
 use RuntimeException;
 use SimpleSoftwareIO\QrCode\Generator;
+use Stringable;
 
 /**
  * Renders QR codes as SVG or PNG.
@@ -23,28 +24,40 @@ final readonly class QrCodeGenerator
 
     public function svg(string $content, int $size = 512): string
     {
-        return (string) (clone $this->generator)
+        return $this->stringify((clone $this->generator)
             ->format('svg')
             ->size($size)
             ->margin(self::MARGIN_MODULES)
             ->errorCorrection('M')
             ->encoding('UTF-8')
-            ->generate($content);
+            ->generate($content));
     }
 
     public function png(string $content, int $size = 1024): string
     {
         if (extension_loaded('imagick')) {
-            return (string) (clone $this->generator)
+            return $this->stringify((clone $this->generator)
                 ->format('png')
                 ->size($size)
                 ->margin(self::MARGIN_MODULES)
                 ->errorCorrection('M')
                 ->encoding('UTF-8')
-                ->generate($content);
+                ->generate($content));
         }
 
         return $this->pngWithGd($content, $size);
+    }
+
+    /**
+     * simple-qrcode returns an HtmlString (or a string); its docblock is imprecise.
+     */
+    private function stringify(mixed $result): string
+    {
+        return match (true) {
+            is_string($result) => $result,
+            $result instanceof Stringable => (string) $result,
+            default => throw new RuntimeException('Unable to render the QR code.'),
+        };
     }
 
     private function pngWithGd(string $content, int $size): string
@@ -53,7 +66,7 @@ final readonly class QrCodeGenerator
         $modules = $matrix->getWidth();
         $total = $modules + 2 * self::MARGIN_MODULES;
         $scale = max(1, intdiv($size, $total));
-        $pixels = $total * $scale;
+        $pixels = max(1, $total * $scale);
 
         $image = imagecreate($pixels, $pixels);
 
